@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist", // Output directory for compiled files
+    "declaration": true, // Generate corresponding '.d.ts' files
+    "declarationMap": true, // Create source maps for '.d.ts' files
+    "rootDir": "./src", // Root directory of source files
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "target": "es6", // Set target JavaScript version
+    "module": "commonjs", // Set module system
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "**/*.test.ts", "src/__tests__"]
+}
