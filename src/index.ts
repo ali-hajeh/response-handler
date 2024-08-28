@@ -24,14 +24,20 @@ export interface ResponseType {
   }[];
 }
 
-type CustomMethod<T extends any[] = any[]> = (this: Response, ...args: T) => Response;
+type CustomMethod<T extends any[] = any[]> = (
+  this: Response,
+  ...args: T
+) => Response;
 
 declare global {
   namespace Express {
     interface Response {
       success(options?: SuccessResponseOptions): Response;
       badRequest(options?: ErrorResponseOptions): Response;
-      joiValidationError(error: ValidationError, options?: ErrorResponseOptions): Response;
+      joiValidationError(
+        error: ValidationError,
+        options?: ErrorResponseOptions
+      ): Response;
       notFound(options?: ErrorResponseOptions): Response;
       serverError(options?: ErrorResponseOptions): Response;
       [key: string]: CustomMethod | any;
@@ -42,7 +48,10 @@ declare global {
 class ResponseHandler {
   private static customMethods: Record<string, CustomMethod> = {};
 
-  public static addCustomMethod<T extends any[]>(name: string, method: CustomMethod<T>) {
+  public static addCustomMethod<T extends any[]>(
+    name: string,
+    method: CustomMethod<T>
+  ) {
     this.customMethods[name] = method;
     // Add type definition to global Express.Response
     (Response as any)[name] = method;
@@ -75,7 +84,10 @@ class ResponseHandler {
     });
   }
 
-  private static badRequest(this: Response, options: ErrorResponseOptions = {}) {
+  private static badRequest(
+    this: Response,
+    options: ErrorResponseOptions = {}
+  ) {
     const { message = "Bad Request", errors, statusCode = 400 } = options;
     return this.status(statusCode).json({
       success: false,
@@ -90,7 +102,7 @@ class ResponseHandler {
     error: ValidationError,
     options: ErrorResponseOptions = {}
   ) {
-    const { statusCode = 400 } = options;
+    const { message = "Validation Error", statusCode = 400 } = options;
     const errorDetails = error.details.map((detail) => ({
       message: detail.message,
       path: detail.path,
@@ -98,7 +110,7 @@ class ResponseHandler {
 
     return this.status(statusCode).json({
       success: false,
-      message: "Validation Error",
+      message,
       errors: errorDetails,
       statusCode,
     });
@@ -114,7 +126,10 @@ class ResponseHandler {
     });
   }
 
-  private static serverError(this: Response, options: ErrorResponseOptions = {}) {
+  private static serverError(
+    this: Response,
+    options: ErrorResponseOptions = {}
+  ) {
     const {
       message = "Internal Server Error",
       errors,
