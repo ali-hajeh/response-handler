@@ -40,6 +40,7 @@ declare global {
       ): Response;
       notFound(options?: ErrorResponseOptions): Response;
       serverError(options?: ErrorResponseOptions): Response;
+      unauthorized(options?: ErrorResponseOptions): Response;
       [key: string]: CustomMethod | any;
     }
   }
@@ -64,6 +65,7 @@ class ResponseHandler {
       res.joiValidationError = this.joiValidationError.bind(res);
       res.notFound = this.notFound.bind(res);
       res.serverError = this.serverError.bind(res);
+      res.unauthorized = this.unauthorized.bind(res);
 
       // Attach custom methods
       Object.entries(this.customMethods).forEach(([name, method]) => {
@@ -135,6 +137,19 @@ class ResponseHandler {
       errors,
       statusCode = 500,
     } = options;
+    return this.status(statusCode).json({
+      success: false,
+      message,
+      errors,
+      statusCode,
+    });
+  }
+
+  private static unauthorized(
+    this: Response,
+    options: ErrorResponseOptions = {}
+  ) {
+    const { message = "Unauthorized", errors, statusCode = 401 } = options;
     return this.status(statusCode).json({
       success: false,
       message,

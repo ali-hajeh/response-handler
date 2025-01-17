@@ -41,6 +41,7 @@ Once the middleware is set up, the following methods will be available on the `r
 3. `joiValidationError`: Send a response for Joi validation errors
 4. `notFound`: Send a not found response
 5. `serverError`: Send a server error response
+6. `unauthorized`: Send an unauthorized response
 
 ### Example
 
@@ -116,6 +117,15 @@ Send a server error response.
   - `message` (optional): Error message (default: "Internal Server Error")
   - `errors` (optional): Error details
   - `statusCode` (optional): HTTP status code (default: 500)
+
+### res.unauthorized(options)
+
+Send an unauthorized response.
+
+- `options`:
+  - `message` (optional): Error message (default: "Unauthorized")
+  - `errors` (optional): Error details
+  - `statusCode` (optional): HTTP status code (default: 401)
 
 ## Custom Methods
 
