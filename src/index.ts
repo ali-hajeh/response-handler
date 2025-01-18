@@ -46,7 +46,7 @@ declare global {
   }
 }
 
-class ResponseHandler {
+export class ResponseHandler {
   private static customMethods: Record<string, CustomMethod> = {};
 
   public static addCustomMethod<T extends any[]>(
@@ -159,4 +159,4 @@ class ResponseHandler {
   }
 }
 
-export default ResponseHandler;
+
