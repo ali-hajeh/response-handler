@@ -1,15 +1,24 @@
 {
   "compilerOptions": {
-    "outDir": "./dist", // Output directory for compiled files
-    "declaration": true, // Generate corresponding '.d.ts' files
-    "declarationMap": true, // Create source maps for '.d.ts' files
-    "rootDir": "./src", // Root directory of source files
+    "target": "es2020",
+    "module": "commonjs",
+    "lib": ["es2020"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "target": "es6", // Set target JavaScript version
-    "module": "commonjs", // Set module system
-    "resolveJsonModule": true
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "**/*.test.ts", "src/__tests__"]
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "src/__tests__"]
 }
